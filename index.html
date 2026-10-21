@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0d12">
-<meta name="description" content="Hemanth Bhandari — video editor, thumbnail designer and content creator. Reels, Shorts, long-form edits and motion graphics.">
+<meta name="description" content="Hemanth Bhandari — video editor, thumbnail designer and content creator. Shorts, long-form edits and motion graphics.">
 <title>Hemanth Bhandari — Video Editor & Motion Designer</title>
 <style>
 :root{--bg:#090b10;--panel:#11141c;--panel2:#171b25;--line:#282d39;--text:#f4f6fb;--muted:#a5adbd;--accent:#a3ff4f;--accent2:#c5ff91;--radius:20px;--max:1160px}
@@ -93,7 +93,7 @@ fetch("portfolio-data.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then
  if(cfg.font)document.body.style.fontFamily=cfg.font;
  if(cfg.accent)document.documentElement.style.setProperty("--accent",cfg.accent);
  if(cfg.profileImage){const img=document.querySelector(".portrait img");img.src=cfg.profileImage;img.style.display="block";}
- if(Array.isArray(cfg.projects)){projects=cfg.projects;renderProjects();}
+ if(Array.isArray(cfg.projects)){projects=cfg.projects.filter(p=>p.category!=="reel");renderProjects();}
 }).catch(()=>{});
 </script>
 </body></html>
