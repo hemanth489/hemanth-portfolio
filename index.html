@@ -43,7 +43,7 @@
    - url: optional video/project link (YouTube, Drive, Instagram, etc.)
    Put uploaded files in the repository, then use their relative paths.
 ======================================================================== */
-const projects = [
+let projects = [
  {category:"thumbnail",title:"Graphic Designer — Hire Me",description:"Character-led graphic design portfolio thumbnail with a hand-drawn creative direction.",label:"Thumbnail",art1:"GRAPHIC",art2:"DESIGNER",colors:["#253a49","#11131b"],glow:"#a3ff4f",image:"projects/thumbnail-01.jpg",url:""},
  {category:"thumbnail",title:"My Portfolio — Red Edition",description:"High-contrast red portfolio thumbnail with bold typography and dramatic character art.",label:"Thumbnail",art1:"MY",art2:"PORTFOLIO",colors:["#442a43","#17101d"],glow:"#ff4f9a",image:"projects/thumbnail-02.jpg",url:""},
  {category:"thumbnail",title:"Graphic Designer — Dark Concept",description:"Dark cinematic design showcase featuring creative software and character illustration.",label:"Thumbnail",art1:"GRAPHIC",art2:"DESIGNER",colors:["#4a3521","#16120e"],glow:"#ffb24f",image:"projects/thumbnail-03.jpg",url:""},
@@ -79,5 +79,20 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===b));renderProjects(b.dataset.filter)}));
 let observer;function observeReveals(){if(observer)observer.disconnect();if(!("IntersectionObserver"in window)){document.querySelectorAll(".reveal").forEach(x=>x.classList.add("visible"));return}observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll(".reveal:not(.visible)").forEach(x=>observer.observe(x))}
 document.getElementById("year").textContent=new Date().getFullYear();renderProjects();
+// Optional published settings exported from the owner editor (admin.html).
+fetch("portfolio-data.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(cfg=>{
+ if(!cfg)return;
+ const setText=(sel,val)=>{if(typeof val==="string"&&val.trim())document.querySelector(sel).textContent=val};
+ if(cfg.name)setText(".brand",cfg.name.toUpperCase()+".");
+ if(cfg.heroTitle){const h=document.querySelector(".hero h1");h.textContent=cfg.heroTitle;}
+ setText(".hero .lead",cfg.heroDescription);
+ if(cfg.experience){document.querySelector(".proof strong").textContent=cfg.experience;}
+ if(cfg.email){document.querySelectorAll('a[href^="mailto:"]').forEach(a=>a.href="mailto:"+cfg.email);}
+ if(cfg.whatsapp){const w="https://wa.me/"+cfg.whatsapp.replace(/\D/g,"");document.querySelectorAll('a[href*="wa.me/"]').forEach(a=>a.href=w);}
+ if(cfg.font)document.body.style.fontFamily=cfg.font;
+ if(cfg.accent)document.documentElement.style.setProperty("--accent",cfg.accent);
+ if(cfg.profileImage){const img=document.querySelector(".portrait img");img.src=cfg.profileImage;img.style.display="block";}
+ if(Array.isArray(cfg.projects)){projects=cfg.projects;renderProjects();}
+}).catch(()=>{});
 </script>
 </body></html>
