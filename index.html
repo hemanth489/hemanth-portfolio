@@ -93,7 +93,22 @@ fetch("portfolio-data.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then
  if(cfg.font)document.body.style.fontFamily=cfg.font;
  if(cfg.accent)document.documentElement.style.setProperty("--accent",cfg.accent);
  if(cfg.profileImage){const img=document.querySelector(".portrait img");img.src=cfg.profileImage;img.style.display="block";}
- if(Array.isArray(cfg.projects)){projects=cfg.projects.filter(p=>p.category!=="reel");renderProjects();}
+ if(Array.isArray(cfg.projects)){
+  projects=cfg.projects.filter(p=>p.category!=="reel");
+  const videoLinks=[
+    "https://drive.google.com/file/d/1FLDnOUNXWYMiDCjltnxO3blG0TrZOoTe/view?usp=sharing",
+    "https://drive.google.com/file/d/136vDBp7k6yqwil1dabn9XFeKiIbFO4Ns/view?usp=sharing",
+    "https://drive.google.com/file/d/1kfJnePgHfLdcWs6fS0mJuyUorGHLgzX_/view?usp=sharing",
+    "https://drive.google.com/file/d/16SeY0GoOd0_dICa168b7w3Zc7qtbGHDQ/view?usp=sharing",
+    "https://drive.google.com/file/d/1IqLgHBxezIyj7udnjqo1ybX7chhCCQcB/view?usp=sharing"
+  ];
+  const videoProjects=projects.filter(p=>p.category==="long"||p.category==="short");
+  videoProjects.forEach((p,i)=>{if(videoLinks[i])p.url=videoLinks[i];});
+  if(videoLinks.length>videoProjects.length){
+    projects.push({category:"short",title:"Shorts Edit 03",description:"A short-form edit showcasing pacing, transitions and sound design.",label:"YouTube Shorts",art1:"CUT",art2:"IN MOTION",colors:["#302748","#11101c"],glow:"#a3ff4f",image:"",url:videoLinks[4]});
+  }
+  renderProjects();
+}
 }).catch(()=>{});
 </script>
 </body></html>
