@@ -65,8 +65,9 @@ function renderProjects(filter="all"){
   const card=document.createElement("article");card.className="project reveal";
   const preview=document.createElement("div");preview.className="preview";preview.style.setProperty("--c1",p.colors?.[0]||"#253444");preview.style.setProperty("--c2",p.colors?.[1]||"#10141b");preview.style.setProperty("--glow",p.glow||"#a3ff4f");
   const tag=document.createElement("span");tag.className="tag";tag.textContent=p.label||categoryNames[p.category]||"Project";preview.appendChild(tag);
-  if(p.image){const img=document.createElement("img");img.src=p.image;img.alt=p.title;img.loading="lazy";img.onerror=()=>img.remove();preview.appendChild(img)}
-  else{const art=document.createElement("div");art.className="art";art.innerHTML=escapeHtml(p.art1||"YOUR")+'<span>'+escapeHtml(p.art2||"PROJECT")+'</span>';preview.appendChild(art)}
+  // Always render the designed fallback artwork first so cards never appear blank.
+  const art=document.createElement("div");art.className="art";art.innerHTML=escapeHtml(p.art1||"YOUR")+'<span>'+escapeHtml(p.art2||"PROJECT")+'</span>';preview.appendChild(art);
+  if(p.image){const img=document.createElement("img");img.src=p.image;img.alt=p.title||"Project thumbnail";img.loading="lazy";img.onerror=()=>{img.remove();};img.onload=()=>{art.style.visibility="hidden";};preview.appendChild(img)}
   if(p.url){const play=document.createElement("span");play.className="play";play.textContent="▶";preview.appendChild(play)}
   const info=document.createElement("div");info.className="pinfo";const h=document.createElement("h3");h.textContent=p.title;const desc=document.createElement("p");desc.textContent=p.description;info.append(h,desc);
   const link=document.createElement("a");link.className="plink";link.textContent=p.url?"Watch project ↗":"Add project link ↗";link.href=p.url||"#contact";
