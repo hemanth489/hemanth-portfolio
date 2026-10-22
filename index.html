@@ -58,6 +58,8 @@ let projects = [
  {category:"short",title:"Shorts Edit 01",description:"A second short-form showcase for your best work.",label:"YouTube Shorts",art1:"FAST",art2:"IMPACT",colors:["#432b43","#170f19"],glow:"#e47cff",image:"",url:""},
  {category:"short",title:"Shorts Edit 02",description:"Replace with your strongest short edit or vertical ad.",label:"YouTube Shorts",art1:"SMALL",art2:"SCREEN",colors:["#2c3c2a","#10170e"],glow:"#b0ff72",image:"",url:""}
 ];
+// Remove the unused Reel placeholder slots from the public portfolio.
+projects = projects.filter(p => p.category !== "reel");
 const categoryNames={thumbnail:"Thumbnail",reel:"Reel",long:"Long-form",short:"Shorts"};
 const grid=document.getElementById("projectGrid");
 function renderProjects(filter="all"){
