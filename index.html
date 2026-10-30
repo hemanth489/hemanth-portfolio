@@ -75,7 +75,7 @@ function renderProjects(filter="all"){
   if(p.image){const img=document.createElement("img");img.src=p.image;img.alt=p.title||"Project thumbnail";img.loading="lazy";img.onerror=()=>{img.remove();};img.onload=()=>{art.style.visibility="hidden";};preview.appendChild(img)}
   const videoPath=p.video||"";
   if(videoPath){
-   const driveMatch=videoPath.match(/drive\\.google\\.com\\/(?:file\\/d\\/|uc\\?export=download&id=)([A-Za-z0-9_-]+)/);
+   const driveMatch=videoPath.match(/drive\\.google\\.com\\/(?:file\\/d\\/|open\\?id=|uc\\?export=download&id=)([A-Za-z0-9_-]+)/);
    if(driveMatch){
     const frame=document.createElement("iframe");frame.className="project-video";frame.src="https://drive.google.com/file/d/"+driveMatch[1]+"/preview";frame.allow="autoplay; encrypted-media; picture-in-picture";frame.allowFullscreen=true;frame.loading="lazy";frame.title=(p.title||"Project")+" video player";preview.appendChild(frame);art.style.visibility="hidden";
    }else{
